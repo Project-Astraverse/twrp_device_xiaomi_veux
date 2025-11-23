@@ -24,7 +24,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 
 # Configure Virtual A/B
-$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression.mk)
 
 # Configure SDCard replacement functionality
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
@@ -62,10 +62,6 @@ PRODUCT_SOONG_NAMESPACES += \
 
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
-# Kernel
-TWRP_REQUIRED_MODULES += \
-	miui_prebuilt
-
 # Twrp Decryption
 PRODUCT_PACKAGES += \
     qcom_decrypt \
@@ -102,3 +98,6 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/libdisplayconfig.qti.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so    
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/recovery/root/system/etc/recovery.fstab:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/system/etc/fstab.default
